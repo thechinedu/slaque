@@ -1,0 +1,6 @@
+{
+  "name": "Slaque CI workflow",
+  "description": "Automatically run tests for Slaque",
+  "iconName": "nodejs",
+  "categories": ["JavaScript", "TypeScript", "Node", "Npm"]
+}
