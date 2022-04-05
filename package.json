@@ -20,7 +20,7 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
-    "@types/node": "17.0.10",
+    "@types/node": "17.0.23",
     "@types/react": "17.0.38",
     "@types/validator": "^13.7.2",
     "eslint": "8.7.0",
