@@ -2,13 +2,12 @@ import { db, hashPassword } from "@/utils";
 
 type UserReqParams = {
   email: string;
-  password: string;
 };
 
 export default class User {
-  static async create({ email, password }: UserReqParams) {
+  static async create({ email }: UserReqParams) {
     return db.user.create({
-      data: { email, passwordDigest: await hashPassword(password) },
+      data: { email },
     });
   }
 
