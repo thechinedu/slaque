@@ -1,4 +1,4 @@
-import { db, hashPassword } from "@/utils";
+import { db } from "@/utils";
 
 type UserReqParams = {
   email: string;
@@ -7,7 +7,7 @@ type UserReqParams = {
 export default class User {
   static async create({ email }: UserReqParams) {
     return db.user.create({
-      data: { email },
+      data: { email, verificationStatus: "PENDING" },
     });
   }
 

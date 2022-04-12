@@ -11,11 +11,16 @@ datasource db {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  isVerified Boolean
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  id                 Int                    @id @default(autoincrement())
+  email              String                 @unique
+  verificationStatus UserVerificationStatus @default(PENDING)
+  createdAt          DateTime               @default(now())
+  updatedAt          DateTime               @default(now())
 
   @@map("users")
+}
+
+enum UserVerificationStatus {
+  PENDING
+  VERIFIED
 }
