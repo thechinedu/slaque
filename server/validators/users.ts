@@ -27,6 +27,26 @@ const ensureRequiredFieldsPresent: Middleware = (req, res, next) => {
   return next();
 };
 
+const ensureValidEmail: Middleware = (req, res, next) => {
+  const { body } = req;
+  const { email } = body;
+  const errors = [];
+
+  if (!validator.isEmail(email)) {
+    errors.push("Email is not valid");
+  }
+
+  if (errors.length) {
+    return res.status(HTTPStatus.UNPROCESSABLE_ENTITY).json({
+      status: "fail",
+      message: "Validation failed",
+      errors,
+    });
+  }
+
+  return next();
+};
+
 const ensureEmailUniqueness: Middleware = async (req, res, next) => {
   const { body } = req;
   const { email } = body;
@@ -45,26 +65,6 @@ const ensureEmailUniqueness: Middleware = async (req, res, next) => {
     return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).json({
       status: "error",
       message: "Internal server error",
-    });
-  }
-
-  return next();
-};
-
-const ensureValidEmail: Middleware = (req, res, next) => {
-  const { body } = req;
-  const { email } = body;
-  const errors = [];
-
-  if (!validator.isEmail(email)) {
-    errors.push("Email is not valid");
-  }
-
-  if (errors.length) {
-    return res.status(HTTPStatus.UNPROCESSABLE_ENTITY).json({
-      status: "fail",
-      message: "Validation failed",
-      errors,
     });
   }
 

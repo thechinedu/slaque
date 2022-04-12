@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { createUser } from "@/server/controllers/users";
+import { convertUserEmailToLowerCase } from "@/server/hooks/users";
 import { createUserValidators } from "@/server/validators/users";
 import { chainMiddlewares } from "@/utils";
 
@@ -8,6 +9,7 @@ import { chainMiddlewares } from "@/utils";
 // Investigate why this is happening and try to resolve the issue
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const executeMiddlewares = chainMiddlewares(
+    convertUserEmailToLowerCase,
     ...createUserValidators(),
     createUser
   );
@@ -16,7 +18,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 /**
- * User sign up and Authentication flow for base slaque
+ * User sign up and Authentication flow for base slaque hello
  * ========================================================================
  *
  * When a user signs up for an account, a one time token is sent to the user's email address

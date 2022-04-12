@@ -5,7 +5,7 @@ export const createUser: Middleware = async (req, res, next) => {
   const { email } = req.body;
 
   try {
-    const user = await User.create({ email: email.toLowerCase() });
+    const user = await User.create({ email });
 
     return res
       .status(HTTPStatus.CREATED)
