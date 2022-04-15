@@ -1,7 +1,20 @@
+/*
+* ==============================================================
+*  Header
+* ==============================================================
+*/
+
+.header {
+  background-color: var(--linen);
+  margin-inline: calc(var(--spacer-2) * -1);
+  margin-top: calc(var(--spacer-2) * -1);
+}
+
 .nav {
   display: flex;
   align-items: center;
   margin-inline: var(--spacer-2);
+  padding-top: var(--spacer-2);
   font-weight: 700;
 }
 
@@ -24,4 +37,41 @@
 
 .menu {
   width: 18px;
+}
+
+.intro {
+  margin-top: var(--spacer-4);
+  padding: var(--spacer-2);
+}
+
+.intro h1 {
+  font-size: var(--large);
+}
+
+.intro p {
+  margin-top: var(--spacer-2);
+  margin-bottom: var(--spacer-4);
+}
+
+.intro a {
+  display: inline-block;
+  width: 100%;
+  margin-top: var(--spacer-2);
+  text-align: center;
+  border-radius: 3px;
+  color: var(--white);
+  font-family: "DM Sans", sans-serif;
+  font-size: var(--small);
+  font-weight: 700;
+  padding: var(--spacer-2) var(--spacer-2);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.intro .try {
+  background-color: var(--violet);
+}
+
+.intro .googleSignUp {
+  background-color: var(--azure);
 }
