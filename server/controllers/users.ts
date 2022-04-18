@@ -1,11 +1,14 @@
+import { sendConfirmationEmail } from "@/server/mailers";
 import User from "@/server/models/user";
 import { HTTPStatus, Middleware } from "@/types/shared";
 
-export const createUser: Middleware = async (req, res, next) => {
+export const createUser: Middleware = async (req, res) => {
   const { email } = req.body;
 
   try {
     const user = await User.create({ email });
+
+    sendConfirmationEmail(email, "123456");
 
     return res
       .status(HTTPStatus.CREATED)
