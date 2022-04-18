@@ -18,7 +18,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 /**
- * User sign up and Authentication flow for base slaque hello
+ * User sign up and Authentication flow for base slaque
  * ========================================================================
  *
  * When a user signs up for an account, a one time token is sent to the user's email address
