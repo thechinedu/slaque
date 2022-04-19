@@ -1,5 +1,5 @@
 import { sendConfirmationEmail } from "@/server/mailers";
-import User from "@/server/models/user";
+import { User, UserMagicToken } from "@/server/models";
 import { HTTPStatus, Middleware } from "@/types/shared";
 
 export const createUser: Middleware = async (req, res) => {
@@ -7,8 +7,9 @@ export const createUser: Middleware = async (req, res) => {
 
   try {
     const user = await User.create({ email });
+    const magicToken = await UserMagicToken.create(user);
 
-    sendConfirmationEmail(email, "123456");
+    sendConfirmationEmail(email, magicToken.token);
 
     return res
       .status(HTTPStatus.CREATED)

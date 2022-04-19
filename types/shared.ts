@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { User } from "@prisma/client";
 
 export type Data = {
   status: string;
@@ -32,3 +33,5 @@ export enum HTTPMethod {
   PUT = "PUT",
   DELETE = "DELETE",
 }
+
+export type DBUser = User;
