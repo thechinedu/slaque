@@ -23,7 +23,7 @@
   "devDependencies": {
     "@types/node": "^17.0.10",
     "@types/nodemailer": "^6.4.4",
-    "@types/react": "^17.0.38",
+    "@types/react": "^18.0.5",
     "@types/react-dom": "^17.0.15",
     "@types/validator": "^13.7.2",
     "eslint": "^8.7.0",
