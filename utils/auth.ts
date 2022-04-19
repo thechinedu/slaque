@@ -1,4 +1,5 @@
 import argon2, { argon2id } from "argon2";
+import { randomBytes } from "crypto";
 
 type HashPasswordFn = (value: string) => Promise<string>;
 
@@ -12,3 +13,5 @@ const hashOptions = {
 
 export const hashPassword: HashPasswordFn = async (password) =>
   await argon2.hash(password, hashOptions);
+
+export const generateOTP = () => randomBytes(6 / 2).toString("hex");
