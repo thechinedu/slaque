@@ -14,4 +14,7 @@ const hashOptions = {
 export const hashPassword: HashPasswordFn = async (password) =>
   await argon2.hash(password, hashOptions);
 
-export const generateOTP = () => randomBytes(6 / 2).toString("hex");
+export const generateOTP = () =>
+  randomBytes(6 / 2)
+    .toString("hex")
+    .toUpperCase();

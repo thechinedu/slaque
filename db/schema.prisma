@@ -24,7 +24,7 @@ model User {
 
 model UserMagicTokens {
   id        Int      @id @default(autoincrement())
-  userId    Int      @unique
+  userId    Int
   token     String   @unique
   expiresAt DateTime
   isValid   Boolean  @default(true)

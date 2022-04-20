@@ -1,5 +1,5 @@
 import { HTTPMethod, HTTPStatus, Middleware } from "@/types/shared";
-import User from "@/server/models/user";
+import { User } from "@/server/models";
 import validator from "validator";
 
 const ensureAllowedRequest: Middleware = (req, res, next) => {
