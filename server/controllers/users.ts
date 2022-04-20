@@ -14,7 +14,7 @@ export const createUser: Middleware = async (req, res) => {
     return res
       .status(HTTPStatus.CREATED)
       .json({ status: "success", message: "User created", data: user });
-  } catch (err) {
+  } catch {
     // TODO: use an error logging service to log the error thrown
     return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).json({
       status: "error",
