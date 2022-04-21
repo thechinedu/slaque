@@ -38,7 +38,7 @@ const Home: FC = () => {
       </header>
 
       <main className={styles.main}>
-        <section className={styles.organize}>
+        <section className={styles.pitch}>
           <h2>Move faster by organizing your work life</h2>
           <p>
             The key to productivity in Slaque is organized spaces called
@@ -49,7 +49,7 @@ const Home: FC = () => {
           <video src="/threads.mp4" loop autoPlay muted />
         </section>
 
-        <section className={styles.focus}>
+        <section className={styles.pitch}>
           <h2>Focus your time on your own terms</h2>
           <p>
             Give yourself the flexibility to work when, where and how you work
@@ -59,7 +59,7 @@ const Home: FC = () => {
           <video src="/focus.mp4" loop autoPlay muted />
         </section>
 
-        <section className={styles.teamwork}>
+        <section className={styles.pitch}>
           <h2>Simplify teamwork for everyone</h2>
           <p>
             Give everyone you work with—inside and outside your company—a more
@@ -73,7 +73,7 @@ const Home: FC = () => {
         <section className={styles.getStarted}>
           <h2>Get started with Slaque</h2>
 
-          <div className={styles.create}>
+          <div className={styles.getStartedStep} data-step="1">
             <h3>Sign up</h3>
             <p>
               <Link href="/get-started">
@@ -83,7 +83,7 @@ const Home: FC = () => {
             </p>
           </div>
 
-          <div className={styles.invite}>
+          <div className={styles.getStartedStep} data-step="2">
             <h3>Invite your coworkers</h3>
             <p>
               Slaque is better together (no, really, it&apos;s a bit
@@ -92,7 +92,7 @@ const Home: FC = () => {
             </p>
           </div>
 
-          <div className={styles.try}>
+          <div className={styles.getStartedStep} data-step="3">
             <h3>Try it out</h3>
             <p>
               Run a project, coordinate with your team, or just talk it out.

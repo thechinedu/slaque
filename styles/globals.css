@@ -1,7 +1,7 @@
 :root {
   /* Typography */
 
-  --base-font-size: 1.125rem;
+  --base-font-size: 1rem;
   --typescale-ratio: 1.333;
 
   --small: calc(var(--base-font-size) / var(--typescale-ratio));
