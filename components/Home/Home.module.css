@@ -1,5 +1,27 @@
 /*
 * ==============================================================
+*  Utils
+* ==============================================================
+*/
+
+.btn {
+  cursor: pointer;
+  display: inline-block;
+  width: 100%;
+  margin-top: var(--spacer-2);
+  text-align: center;
+  border-radius: 3px;
+  color: var(--white);
+  font-family: "DM Sans", sans-serif;
+  font-size: var(--small);
+  font-weight: 700;
+  padding: var(--spacer-2) var(--spacer-2);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+/*
+* ==============================================================
 *  Header
 * ==============================================================
 */
@@ -51,21 +73,6 @@
 .intro p {
   margin-top: var(--spacer-2);
   margin-bottom: var(--spacer-4);
-}
-
-.intro a {
-  display: inline-block;
-  width: 100%;
-  margin-top: var(--spacer-2);
-  text-align: center;
-  border-radius: 3px;
-  color: var(--white);
-  font-family: "DM Sans", sans-serif;
-  font-size: var(--small);
-  font-weight: 700;
-  padding: var(--spacer-2) var(--spacer-2);
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
 }
 
 .intro .try {
@@ -127,4 +134,34 @@
 .getStartedStep a {
   text-decoration: underline;
   color: var(--azure);
+}
+
+.future {
+  background-color: var(--violet);
+  color: var(--white);
+  margin-inline: calc(var(--spacer-2) * -1);
+  padding-block: var(--spacer-10);
+  padding-inline: var(--spacer-2);
+  clip-path: ellipse(105% 100% at center top);
+  text-align: center;
+}
+
+.future .try {
+  background-color: var(--white);
+  color: var(--violet);
+}
+
+/*
+* ==============================================================
+*  Footer
+* ==============================================================
+*/
+
+.footer {
+  margin-top: var(--spacer-3);
+  text-align: center;
+}
+
+.footer .logo {
+  width: 32px;
 }

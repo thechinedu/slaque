@@ -1,6 +1,8 @@
 import styles from "./Home.module.css";
+import hero from "@/public/hero.jpeg";
 
 import { Logo, Menu } from "@/components/Icons";
+import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
 
@@ -28,12 +30,19 @@ const Home: FC = () => {
           </p>
 
           <Link href="/get-started">
-            <a className={styles.try}>Try for free</a>
+            <a className={`${styles.btn} ${styles.try}`}>Try for free</a>
           </Link>
 
           <Link href="#">
-            <a className={styles.googleSignUp}>Sign up with google</a>
+            <a className={`${styles.btn} ${styles.googleSignUp}`}>
+              Sign up with google
+            </a>
           </Link>
+
+          <Image
+            src={hero}
+            alt="Hero showing a sneak preview of a slaque channel"
+          />
         </section>
       </header>
 
@@ -104,12 +113,13 @@ const Home: FC = () => {
         <section className={styles.future}>
           <h2>Welcome to where the future works</h2>
           <Link href="/get-started">
-            <a>Try for free</a>
+            <a className={`${styles.btn} ${styles.try}`}>Try for free</a>
           </Link>
         </section>
       </main>
 
       <footer className={styles.footer}>
+        <Logo className={styles.logo} />
         <p>
           &copy;{new Date().getFullYear()} Slaque Technologies. All rights
           reserved.
