@@ -1,8 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { User } from "@prisma/client";
+import { User, UserMagicToken } from "@prisma/client";
+
+export enum RequestStatus {
+  FAIL = "fail",
+  ERROR = "error",
+  SUCCESS = "success",
+}
 
 export type Data = {
-  status: string;
+  status: RequestStatus;
   message: string;
   data?: unknown;
   errors?: unknown;
@@ -34,4 +40,10 @@ export enum HTTPMethod {
   DELETE = "DELETE",
 }
 
+// TODO: figure out a way to use the models to represent these types
 export type DBUser = User;
+export type MagicToken = UserMagicToken;
+
+export type RequestWithToken = NextApiRequest & {
+  magicToken: MagicToken;
+};

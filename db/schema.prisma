@@ -17,12 +17,12 @@ model User {
   createdAt          DateTime               @default(now())
   updatedAt          DateTime               @default(now())
 
-  magicTokens UserMagicTokens[]
+  magicTokens UserMagicToken[]
 
   @@map("users")
 }
 
-model UserMagicTokens {
+model UserMagicToken {
   id        Int      @id @default(autoincrement())
   userId    Int
   token     String   @unique
