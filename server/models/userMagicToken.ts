@@ -6,7 +6,7 @@ export class UserMagicToken {
     const expirationTime = 5 * 60 * 1000; // 5 minutes
     const expiresAt = new Date(Date.now() + expirationTime);
 
-    return db.userMagicTokens.create({
+    return db.userMagicToken.create({
       data: {
         token: await this.generateUniqueToken(),
         userId: user.id,
@@ -15,10 +15,18 @@ export class UserMagicToken {
     });
   }
 
+  static async findByToken(token: string) {
+    return db.userMagicToken.findUnique({
+      where: {
+        token,
+      },
+    });
+  }
+
   private static async generateUniqueToken(): Promise<string> {
     const otp = generateOTP();
 
-    const dbToken = await db.userMagicTokens.findUnique({
+    const dbToken = await db.userMagicToken.findUnique({
       where: {
         token: otp,
       },

@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { createUser } from "@/server/controllers";
-import { convertUserEmailToLowerCase } from "@/server/hooks/users";
-import { createUserValidators } from "@/server/validators/users";
+import { convertUserEmailToLowerCase } from "@/server/hooks";
+import { createUserValidators } from "@/server/validators";
 import { chainMiddlewares } from "@/utils";
 
 // TODO: API resolved without sending a response for /api/v1/users, this may result in stalled requests

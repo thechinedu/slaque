@@ -16,10 +16,34 @@ export class User {
     });
   }
 
-  static findByEmail(email: ReqParams["email"]) {
+  static findByEmail(email: string) {
     return db.user.findUnique({
       where: {
         email,
+      },
+    });
+  }
+
+  static async findByMagicToken(token: string) {
+    try {
+      const raw =
+        await db.$queryRaw`SELECT * FROM users, user_magic_tokens WHERE users.id = user_magic_tokens.userId AND user_magic_tokens.token = ${token}`;
+
+      console.log({ raw });
+    } catch (err) {
+      console.log(err);
+    }
+
+    return db.user.findFirst({
+      where: {
+        magicTokens: {
+          some: {
+            token: {
+              equals: token,
+            },
+            isValid: true,
+          },
+        },
       },
     });
   }
