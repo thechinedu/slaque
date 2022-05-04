@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { User, UserMagicToken } from "@prisma/client";
+import { User, UserMagicToken, UserVerificationStatus } from "@prisma/client";
 
 export enum RequestStatus {
   FAIL = "fail",
@@ -40,10 +40,10 @@ export enum HTTPMethod {
   DELETE = "DELETE",
 }
 
-// TODO: figure out a way to use the models to represent these types
-export type DBUser = User;
-export type MagicToken = UserMagicToken;
+export type UserRecord = User;
+export type MagicTokenRecord = UserMagicToken;
+export const VerificationStatus = UserVerificationStatus;
 
-export type RequestWithToken = NextApiRequest & {
-  magicToken: MagicToken;
+export type RequestWithCredentials<T> = NextApiRequest & {
+  [key: string]: T;
 };

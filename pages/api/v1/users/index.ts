@@ -35,7 +35,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
  * ========================================================================
  *
  * When a user signs up for an account via a workspace url, a confirmatiion email is sent to the user's email address
- * on cofirmation of the email address, the user is set as verified
+ * on confirmation of the email address, the user is set as verified
  * A main user account is created and a workspace account is created (tied to the main user account)
  * The user is required to enter their full name and a password for the workspace account
  * Once the required fields are provided, the workspace user is automatically logged in

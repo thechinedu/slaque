@@ -1,20 +1,18 @@
-import { sendConfirmationEmail } from "@/server/mailers";
-import { User, UserMagicToken } from "@/server/models";
+import { UserService } from "@/server/services";
 import {
   HTTPStatus,
+  MagicTokenRecord,
   Middleware,
   RequestStatus,
-  RequestWithToken,
+  RequestWithCredentials,
+  UserRecord,
 } from "@/types/shared";
 
 export const createUser: Middleware = async (req, res) => {
   const { email } = req.body;
 
   try {
-    const user = await User.create({ email });
-    const magicToken = await UserMagicToken.create(user);
-
-    sendConfirmationEmail(email, magicToken.token);
+    const user = await UserService.createUser({ email });
 
     return res.status(HTTPStatus.CREATED).json({
       status: RequestStatus.SUCCESS,
@@ -31,20 +29,28 @@ export const createUser: Middleware = async (req, res) => {
 };
 
 export const confirmNewUser: Middleware = async (req, res) => {
-  // find user by magic token
-  // set isValid to false on the magic token
-  // set user verification status to verified
-  // log the user in
-
-  const { magicToken } = req as RequestWithToken;
+  const { token } = req as RequestWithCredentials<MagicTokenRecord["token"]>;
+  const { email } = req as RequestWithCredentials<UserRecord["email"]>;
 
   try {
-    const user = await User.findByMagicToken(magicToken.token);
+    UserService.confirmUser({ email, token });
+    // Log user in
+    // AuthService.loginUser(email)
+    // Create long-lived refresh token (session-cookie ==> save as httpOnly secure cookie)
+    // Create short-lived access token (jwt ==> save in application memory)
+    //
+    // User makes auth request with the access token
+    // when access token expires, refresh token is used to get a new access+refresh token pair
+    // old refresh token is invalidated
+    // when refresh token expires, user is logged out
 
     return res.status(HTTPStatus.OK).json({
       status: RequestStatus.SUCCESS,
       message: "User confirmed",
-      data: user,
+      data: {
+        token,
+        email,
+      },
     });
   } catch (err) {
     console.log(err);

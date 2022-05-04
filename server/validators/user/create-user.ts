@@ -1,10 +1,17 @@
-import { HTTPMethod, HTTPStatus, Middleware, RequestStatus } from "@/types/shared";
-import { User } from "@/server/models";
+import {
+  HTTPMethod,
+  HTTPStatus,
+  Middleware,
+  RequestStatus,
+} from "@/types/shared";
+import { UserService } from "@/server/services";
 import { checkRequest } from "@/utils";
 import validator from "validator";
 
 const ensureRequiredFieldsPresent: Middleware = (req, res, next) => {
-  const { body: { email } } = req;
+  const {
+    body: { email },
+  } = req;
 
   if (!email) {
     return res.status(HTTPStatus.BAD_REQUEST).json({
@@ -17,7 +24,9 @@ const ensureRequiredFieldsPresent: Middleware = (req, res, next) => {
 };
 
 const ensureValidEmail: Middleware = (req, res, next) => {
-  const { body: { email } } = req;
+  const {
+    body: { email },
+  } = req;
   const errors = [];
 
   if (!validator.isEmail(email)) {
@@ -36,10 +45,12 @@ const ensureValidEmail: Middleware = (req, res, next) => {
 };
 
 const ensureEmailUniqueness: Middleware = async (req, res, next) => {
-  const { body: { email } } = req;
+  const {
+    body: { email },
+  } = req;
 
   try {
-    const user = await User.findByEmail(email);
+    const user = await UserService.findByEmail(email);
     if (user) {
       return res.status(HTTPStatus.UNPROCESSABLE_ENTITY).json({
         status: RequestStatus.FAIL,
