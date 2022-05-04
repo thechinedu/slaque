@@ -1,1 +1,1 @@
-export { confirmUserValidators, createUserValidators } from "./users";
+export { confirmUserValidators, createUserValidators } from "./user";
