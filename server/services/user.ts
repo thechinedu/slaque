@@ -30,8 +30,8 @@ const findByEmail = (email: string): Promise<UserRecord | null> => {
   return User.findUnique({ where: { email } });
 };
 
-const confirmUser = ({ email, token }: ConfirmUserArgs) => {
-  User.update({
+const confirmUser = async ({ email, token }: ConfirmUserArgs) => {
+  await User.update({
     where: { email },
     data: {
       verificationStatus: VerificationStatus.VERIFIED,
