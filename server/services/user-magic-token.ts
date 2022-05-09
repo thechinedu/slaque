@@ -20,8 +20,10 @@ const generateUniqueToken = async (): Promise<string> => {
 };
 
 const createMagicToken = async (user: UserRecord) => {
-  const expirationTime = 5 * 60 * 1000; // 5 minutes
+  const expirationTime = 60 * 60 * 1000; // TODO: (1 hour) Change to 5 minutes
   const expiresAt = new Date(Date.now() + expirationTime);
+
+  // TODO: Invalidate previous tokens before creating a new one
 
   return UserMagicToken.create({
     data: {
@@ -40,8 +42,8 @@ const findUserByEmail = (email: string) => {
   return UserService.findByEmail(email);
 };
 
-const invalidateToken = (token: string) => {
-  UserMagicToken.update({
+const invalidateToken = async (token: string) => {
+  await UserMagicToken.update({
     where: { token },
     data: { isValid: false },
   });

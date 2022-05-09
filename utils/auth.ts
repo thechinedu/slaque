@@ -1,5 +1,6 @@
 import argon2, { argon2id } from "argon2";
 import { randomBytes } from "crypto";
+import jwt from "jsonwebtoken";
 
 type HashPasswordFn = (value: string) => Promise<string>;
 
@@ -18,3 +19,11 @@ export const generateOTP = () =>
   randomBytes(6 / 2)
     .toString("hex")
     .toUpperCase();
+
+export const generateAccessToken = (data: string) =>
+  jwt.sign({ data }, process.env.SECRET_KEY as string, {
+    expiresIn: "15m",
+  });
+
+export const verifyAccessToken = (token: string) =>
+  jwt.verify(token, process.env.SECRET_KEY as string);
