@@ -1,5 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { User, UserMagicToken, UserVerificationStatus } from "@prisma/client";
+import {
+  User,
+  UserAuthToken,
+  UserVerificationStatus,
+  AuthTokenType,
+} from "@prisma/client";
 
 export enum RequestStatus {
   FAIL = "fail",
@@ -41,8 +46,9 @@ export enum HTTPMethod {
 }
 
 export type UserRecord = User;
-export type MagicTokenRecord = UserMagicToken;
+export type AuthTokenRecord = UserAuthToken;
 export const VerificationStatus = UserVerificationStatus;
+export const TokenType = AuthTokenType;
 
 export type RequestWithCredentials<T> = NextApiRequest & {
   [key: string]: T;

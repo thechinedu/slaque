@@ -58,7 +58,8 @@ const ensureEmailUniqueness: Middleware = async (req, res, next) => {
         errors: ["Email is already in use by another user"],
       });
     }
-  } catch {
+  } catch (err) {
+    console.log(err);
     // TODO: use an error logging service to log the error thrown
     return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).json({
       status: RequestStatus.ERROR,
