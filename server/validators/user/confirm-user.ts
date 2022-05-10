@@ -1,8 +1,7 @@
 import {
   HTTPMethod,
   HTTPStatus,
-  MagicTokenRecord,
-  // MagicTokenRecord,
+  AuthTokenRecord,
   Middleware,
   RequestStatus,
   RequestWithCredentials,
@@ -10,8 +9,6 @@ import {
 } from "@/types/shared";
 import { UserMagicTokenService } from "@/server/services";
 import { checkRequest } from "@/utils";
-// import { NextApiRequest } from "next";
-// import validator from "validator";
 
 const ensureRequiredFieldsPresent: Middleware = (req, res, next) => {
   const {
@@ -70,7 +67,7 @@ const ensureValidToken: Middleware = async (req, res, next) => {
       });
     }
 
-    (req as RequestWithCredentials<MagicTokenRecord["token"]>).token =
+    (req as RequestWithCredentials<AuthTokenRecord["token"]>).token =
       magicToken.token;
     (req as RequestWithCredentials<UserRecord["email"]>).email = user.email;
   } catch {

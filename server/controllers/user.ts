@@ -1,7 +1,7 @@
 import { AuthService, UserService } from "@/server/services";
 import {
   HTTPStatus,
-  MagicTokenRecord,
+  AuthTokenRecord,
   Middleware,
   RequestStatus,
   RequestWithCredentials,
@@ -19,7 +19,8 @@ export const createUser: Middleware = async (req, res) => {
       message: "User created",
       data: user,
     });
-  } catch {
+  } catch (err) {
+    console.log(err);
     // TODO: use an error logging service to log the error thrown
     return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).json({
       status: RequestStatus.ERROR,
@@ -29,7 +30,7 @@ export const createUser: Middleware = async (req, res) => {
 };
 
 export const confirmNewUser: Middleware = async (req, res) => {
-  const { token } = req as RequestWithCredentials<MagicTokenRecord["token"]>;
+  const { token } = req as RequestWithCredentials<AuthTokenRecord["token"]>;
   const { email } = req as RequestWithCredentials<UserRecord["email"]>;
 
   try {

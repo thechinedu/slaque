@@ -1,14 +1,14 @@
-import { UserRecord } from "@/types/shared";
+import { UserRecord, TokenType } from "@/types/shared";
 import { db, generateOTP } from "@/utils";
 
 import { UserService } from "./user";
 
-const { userMagicToken: UserMagicToken } = db;
+const { userAuthToken: UserAuthToken } = db;
 
 const generateUniqueToken = async (): Promise<string> => {
   const otp = generateOTP();
 
-  const dbToken = await UserMagicToken.findUnique({
+  const dbToken = await UserAuthToken.findUnique({
     where: {
       token: otp,
     },
@@ -25,17 +25,18 @@ const createMagicToken = async (user: UserRecord) => {
 
   // TODO: Invalidate previous tokens before creating a new one
 
-  return UserMagicToken.create({
+  return UserAuthToken.create({
     data: {
       token: await generateUniqueToken(),
       userId: user.id,
+      type: TokenType.MAGIC_TOKEN,
       expiresAt,
     },
   });
 };
 
 const findByToken = (user: UserRecord, token: string) => {
-  return UserMagicToken.findFirst({ where: { token, userId: user.id } });
+  return UserAuthToken.findFirst({ where: { token, userId: user.id } });
 };
 
 const findUserByEmail = (email: string) => {
@@ -43,7 +44,7 @@ const findUserByEmail = (email: string) => {
 };
 
 const invalidateToken = async (token: string) => {
-  await UserMagicToken.update({
+  await UserAuthToken.update({
     where: { token },
     data: { isValid: false },
   });

@@ -2,7 +2,7 @@ import { sendConfirmationEmail } from "@/server/mailers";
 import { UserRecord, VerificationStatus } from "@/types/shared";
 import { db } from "@/utils";
 
-import { UserMagicTokenService } from "./user-magic-token";
+import { UserMagicTokenService } from "./user-auth-token";
 
 type CreateUserArgs = {
   email: string;
@@ -21,7 +21,7 @@ const createUser = async ({ email }: CreateUserArgs): Promise<UserRecord> => {
   });
   const userMagicToken = await UserMagicTokenService.createMagicToken(user);
 
-  sendConfirmationEmail(user.email, userMagicToken.token);
+  // sendConfirmationEmail(user.email, userMagicToken.token);
 
   return user;
 };
