@@ -1,4 +1,7 @@
+import { TokenType, UserRecord } from "@/types/shared";
 import { generateAccessToken } from "@/utils/auth";
+
+import { UserAuthTokenService } from "./user-auth-token";
 
 // AuthService.loginUser(email)
 // Create long-lived refresh token (session-cookie ==> save as httpOnly secure cookie)
@@ -9,10 +12,11 @@ import { generateAccessToken } from "@/utils/auth";
 // old refresh token is invalidated
 // when refresh token expires, user is logged out
 
-const loginUser = (email: string) => {
-  const accessToken = generateAccessToken(email);
+const loginUser = async (user: UserRecord) => {
+  const accessToken = generateAccessToken(user.id);
+  const refreshToken = await UserAuthTokenService.createAuthToken(user, TokenType.REFRESH_TOKEN);
 
-  return accessToken;
+  return { accessToken, refreshToken };
 };
 
 const serviceMethods = () => ({

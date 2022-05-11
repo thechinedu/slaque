@@ -23,6 +23,6 @@ export const chainMiddlewares = (...middlewareFns: Middleware[]) => {
 
     // If all middlewares have been executed, execute the afterAll callback
     // In situations where a middleware terminates a request, this callback will not be triggered
-    if (middlewareFns.length === 0) afterAll?.();
+    if (middlewareFns.length === 0) afterAll?.(); // TODO: afterAll is no longer needed. Remove it
   };
 };

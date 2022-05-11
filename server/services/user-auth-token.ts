@@ -5,8 +5,19 @@ import { UserService } from "./user";
 
 const { userAuthToken: UserAuthToken } = db;
 
-const generateUniqueToken = async (): Promise<string> => {
-  const otp = generateOTP();
+const authTokenOptions = {
+  MAGIC_TOKEN: () => ({
+    TOKEN_SIZE: 6,
+    TOKEN_EXPIRY_MS: 5 * 60_000, // 5 minutes
+  }),
+  REFRESH_TOKEN: () => ({
+    TOKEN_SIZE: 128,
+    TOKEN_EXPIRY_MS: 48 * 60 * 60_000, // 2 days
+  }),
+};
+
+const generateUniqueToken = async (tokenSize: number = 6): Promise<string> => {
+  const otp = generateOTP(tokenSize);
 
   const dbToken = await UserAuthToken.findUnique({
     where: {
@@ -14,22 +25,26 @@ const generateUniqueToken = async (): Promise<string> => {
     },
   });
 
-  if (dbToken) return generateUniqueToken();
+  if (dbToken) return generateUniqueToken(tokenSize);
 
   return otp;
 };
 
-const createMagicToken = async (user: UserRecord) => {
-  const expirationTime = 60 * 60 * 1000; // TODO: (1 hour) Change to 5 minutes
-  const expiresAt = new Date(Date.now() + expirationTime);
+const createAuthToken = async (
+  user: UserRecord,
+  type: keyof typeof TokenType
+) => {
+  const options = authTokenOptions[type]();
+  const expirationTimeMS = options.TOKEN_EXPIRY_MS;
+  const expiresAt = new Date(Date.now() + expirationTimeMS);
 
   // TODO: Invalidate previous tokens before creating a new one
 
   return UserAuthToken.create({
     data: {
-      token: await generateUniqueToken(),
+      token: await generateUniqueToken(options.TOKEN_SIZE),
       userId: user.id,
-      type: TokenType.MAGIC_TOKEN,
+      type,
       expiresAt,
     },
   });
@@ -51,10 +66,10 @@ const invalidateToken = async (token: string) => {
 };
 
 const serviceMethods = () => ({
-  createMagicToken,
+  createAuthToken,
   findByToken,
   findUserByEmail,
   invalidateToken,
 });
 
-export const UserMagicTokenService = serviceMethods();
+export const UserAuthTokenService = serviceMethods();

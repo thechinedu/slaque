@@ -1,8 +1,8 @@
 import { sendConfirmationEmail } from "@/server/mailers";
-import { UserRecord, VerificationStatus } from "@/types/shared";
+import { TokenType, UserRecord, VerificationStatus } from "@/types/shared";
 import { db } from "@/utils";
 
-import { UserMagicTokenService } from "./user-auth-token";
+import { UserAuthTokenService } from "./user-auth-token";
 
 type CreateUserArgs = {
   email: string;
@@ -19,9 +19,12 @@ const createUser = async ({ email }: CreateUserArgs): Promise<UserRecord> => {
   const user = await User.create({
     data: { email },
   });
-  const userMagicToken = await UserMagicTokenService.createMagicToken(user);
+  const userMagicToken = await UserAuthTokenService.createAuthToken(
+    user,
+    TokenType.MAGIC_TOKEN
+  );
 
-  // sendConfirmationEmail(user.email, userMagicToken.token);
+  sendConfirmationEmail(user.email, userMagicToken.token);
 
   return user;
 };
@@ -37,7 +40,7 @@ const confirmUser = async ({ email, token }: ConfirmUserArgs) => {
       verificationStatus: VerificationStatus.VERIFIED,
     },
   });
-  UserMagicTokenService.invalidateToken(token);
+  await UserAuthTokenService.invalidateToken(token);
 };
 
 const serviceMethods = () => ({

@@ -7,6 +7,7 @@ import {
   RequestWithCredentials,
   UserRecord,
 } from "@/types/shared";
+import { serialize } from "cookie";
 
 export const createUser: Middleware = async (req, res) => {
   const { email } = req.body;
@@ -31,11 +32,24 @@ export const createUser: Middleware = async (req, res) => {
 
 export const confirmNewUser: Middleware = async (req, res) => {
   const { token } = req as RequestWithCredentials<AuthTokenRecord["token"]>;
-  const { email } = req as RequestWithCredentials<UserRecord["email"]>;
+  const {
+    user,
+    user: { email },
+  } = req as RequestWithCredentials<UserRecord>;
 
   try {
-    UserService.confirmUser({ email, token });
-    const accessToken = AuthService.loginUser(email);
+    await UserService.confirmUser({ email, token });
+    const { accessToken, refreshToken } = await AuthService.loginUser(user);
+
+    res.setHeader(
+      "Set-Cookie",
+      serialize("refreshToken", refreshToken.token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        expires: new Date(refreshToken.expiresAt),
+        sameSite: "strict", // cookie will oly be sent in a first-party context: https://web.dev/samesite-cookies-explained/
+      })
+    );
 
     return res.status(HTTPStatus.OK).json({
       status: RequestStatus.SUCCESS,
