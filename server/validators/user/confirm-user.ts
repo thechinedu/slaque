@@ -7,7 +7,7 @@ import {
   RequestWithCredentials,
   UserRecord,
 } from "@/types/shared";
-import { UserMagicTokenService } from "@/server/services";
+import { UserAuthTokenService } from "@/server/services";
 import { checkRequest } from "@/utils";
 
 const ensureRequiredFieldsPresent: Middleware = (req, res, next) => {
@@ -41,7 +41,7 @@ const ensureValidToken: Middleware = async (req, res, next) => {
   } = req;
 
   try {
-    const user = await UserMagicTokenService.findUserByEmail(email);
+    const user = await UserAuthTokenService.findUserByEmail(email);
 
     if (!user) {
       return res.status(HTTPStatus.BAD_REQUEST).json({
@@ -50,7 +50,7 @@ const ensureValidToken: Middleware = async (req, res, next) => {
       });
     }
 
-    const magicToken = await UserMagicTokenService.findByToken(user, token);
+    const magicToken = await UserAuthTokenService.findByToken(user, token);
     const now = Date.now();
 
     if (!magicToken || !magicToken.isValid) {
@@ -69,7 +69,7 @@ const ensureValidToken: Middleware = async (req, res, next) => {
 
     (req as RequestWithCredentials<AuthTokenRecord["token"]>).token =
       magicToken.token;
-    (req as RequestWithCredentials<UserRecord["email"]>).email = user.email;
+    (req as RequestWithCredentials<UserRecord>).user = user;
   } catch {
     // TODO: use an error logging service to log the error thrown
     return res.status(HTTPStatus.INTERNAL_SERVER_ERROR).json({

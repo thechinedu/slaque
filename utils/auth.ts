@@ -15,13 +15,13 @@ const hashOptions = {
 export const hashPassword: HashPasswordFn = async (password) =>
   await argon2.hash(password, hashOptions);
 
-export const generateOTP = () =>
-  randomBytes(6 / 2)
+export const generateOTP = (desiredLength: number) =>
+  randomBytes(desiredLength / 2)
     .toString("hex")
     .toUpperCase();
 
-export const generateAccessToken = (data: string) =>
-  jwt.sign({ data }, process.env.SECRET_KEY as string, {
+export const generateAccessToken = (payload: unknown) =>
+  jwt.sign({ payload }, process.env.SECRET_KEY as string, {
     expiresIn: "15m",
   });
 
