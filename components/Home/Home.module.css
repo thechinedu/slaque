@@ -29,7 +29,14 @@
 .header {
   background-color: var(--linen);
   margin-inline: calc(var(--spacer-2) * -1);
-  margin-top: calc(var(--spacer-2) * -1);
+  padding-inline: var(--spacer-2);
+  margin-block-start: calc(var(--spacer-2) * -1);
+  padding-block-start: var(--spacer-2);
+
+  @media (min-width: 768px) {
+    margin-inline: calc(var(--spacer-4) * -1);
+    margin-block-start: calc(var(--spacer-4) * -1);
+  }
 }
 
 .nav {
@@ -49,7 +56,6 @@
 
 .logoContainer {
   font-size: var(--medium);
-  /* font-weight: 700; */
 }
 
 .logo {
@@ -64,15 +70,19 @@
 .intro {
   margin-top: var(--spacer-4);
   padding: var(--spacer-2);
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
 }
 
 .intro h1 {
-  font-size: var(--x-large);
+  font-size: var(--larger);
 }
 
 .intro p {
   margin-top: var(--spacer-2);
-  margin-bottom: var(--spacer-4);
+  margin-bottom: var(--spacer-3);
 }
 
 .intro .try {
@@ -81,6 +91,19 @@
 
 .intro .googleSignUp {
   background-color: var(--azure);
+}
+
+.intro .img {
+  margin-top: var(
+    --spacer-2
+  ) !important; /* Override next.js Image component margin:auto */
+
+  @media (min-width: 768px) {
+    min-height: auto !important; /* Override next.js Image component min-height:100% */
+    width: auto !important; /* Override next.js Image component width:0 */
+    height: auto !important; /* Override next.js Image component height:0 */
+    min-width: auto !important; /* Override next.js Image component min-width:100% */
+  }
 }
 
 /*
