@@ -3,4 +3,8 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: var(--spacer-2);
+
+  @media (min-width: 768px) {
+    padding: var(--spacer-4);
+  }
 }

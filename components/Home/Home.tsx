@@ -22,26 +22,29 @@ const Home: FC = () => {
         </nav>
 
         <section className={styles.intro}>
-          <h1>Slaque is your digital HQ</h1>
+          <div>
+            <h1>Slaque is your digital HQ</h1>
 
-          <p>
-            Transform the way you work with one place for everyone and
-            everything you need to get stuff done.
-          </p>
+            <p>
+              Transform the way you work with one place for everyone and
+              everything you need to get stuff done.
+            </p>
 
-          <Link href="/get-started">
-            <a className={`${styles.btn} ${styles.try}`}>Try for free</a>
-          </Link>
+            <Link href="/get-started">
+              <a className={`${styles.btn} ${styles.try}`}>Try for free</a>
+            </Link>
 
-          <Link href="#">
-            <a className={`${styles.btn} ${styles.googleSignUp}`}>
-              Sign up with google
-            </a>
-          </Link>
+            <Link href="#">
+              <a className={`${styles.btn} ${styles.googleSignUp}`}>
+                Sign up with google
+              </a>
+            </Link>
+          </div>
 
           <Image
+            className={styles.img}
             src={hero}
-            alt="Hero showing a sneak preview of a slaque channel"
+            alt="Sneak preview of a slaque channel"
           />
         </section>
       </header>
