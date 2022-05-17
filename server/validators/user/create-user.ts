@@ -9,6 +9,13 @@ import { checkRequest } from "@/utils";
 import validator from "validator";
 
 const ensureRequiredFieldsPresent: Middleware = (req, res, next) => {
+  if (!req.body) {
+    return res.status(HTTPStatus.BAD_REQUEST).json({
+      status: RequestStatus.ERROR,
+      message: "Request body is required",
+    });
+  }
+
   const {
     body: { email },
   } = req;
